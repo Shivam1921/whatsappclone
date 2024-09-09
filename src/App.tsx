@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import LeftPane from "./components/left_section/LeftPane";
+import RightPane from "./components/right_section/RightPane";
+import type { UserIndex } from "./types/commonTypes";
+import DefaultPage from "./components/right_section/default/DefaultPage";
+
 
 function App() {
+  const [userId, setUserId] = useState<UserIndex|null>(null);
+  const [currentMessage,setCurrentMessage] = useState("");
+  const [makeRerender,setMakeRerender] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="container">
+      <LeftPane userId={userId} setUserId={setUserId}/>
+      {typeof userId === "number"?
+      <RightPane userId={userId} currentMessage={currentMessage} setCurrentMessage={setCurrentMessage} makeRerender={makeRerender} setMakeRerender={setMakeRerender}/>
+   :<DefaultPage/>}
+      </div>
   );
 }
 
